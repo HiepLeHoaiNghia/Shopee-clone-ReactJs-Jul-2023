@@ -5,3 +5,6 @@ export const saveAcessTokenToLS = (access_token: string) => {
 export const clearAccessTokenfromLS = () => {
   localStorage.remove('access_token')
 }
+
+export const getAcessTokenFromLS = () =>
+  localStorage.getItem('access_token') || ''
