@@ -1,7 +1,23 @@
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
+import { useMutation } from '@tanstack/react-query'
+import { useContext } from 'react'
+import { logoutAccount } from 'src/apis/auth.api'
+import { AppContext } from 'src/contexts/app.context'
 
 export default function Header() {
+  const { setIsAuthenticated, isAuthenticated } = useContext(AppContext)
+
+  const logoutMutation = useMutation({
+    mutationFn: logoutAccount,
+    onSuccess: () => {
+      setIsAuthenticated(false)
+    }
+  })
+
+  const handleLogout = () => {
+    logoutMutation.mutate()
+  }
   return (
     <div className='bg-[linear-gradient(-180deg,#ee4d2d,#ff6433)] pb-5 pt-2  text-white'>
       <div className='container'>
@@ -13,12 +29,8 @@ export default function Header() {
             renderPopover={
               <div className='relative rounded-sm border border-gray-200 bg-white shadow-md'>
                 <div className='flex flex-col py-2 pl-3 pr-28'>
-                  <button className='px-3 py-2 hover:text-orange'>
-                    Tiếng Việt
-                  </button>
-                  <button className='mt-2 px-3 py-2 hover:text-orange'>
-                    English
-                  </button>
+                  <button className='px-3 py-2 hover:text-orange'>Tiếng Việt</button>
+                  <button className='mt-2 px-3 py-2 hover:text-orange'>English</button>
                 </div>
               </div>
             }
@@ -46,46 +58,58 @@ export default function Header() {
               stroke='currentColor'
               className='h-5 w-5'
             >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M19.5 8.25l-7.5 7.5-7.5-7.5'
-              />
+              <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
             </svg>
           </Popover>
-          <Popover
-            as='section'
-            initialOpen={false}
-            className='ml-6 flex cursor-pointer items-center py-1 hover:text-gray-300'
-            renderPopover={
-              <div className='relative rounded-sm border border-gray-200 bg-white shadow-md'>
-                <Link
-                  to='/profile'
-                  className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
-                >
-                  Tài khoản của tôi
-                </Link>
-                <Link
-                  to='/'
-                  className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
-                >
-                  Đơn mua
-                </Link>
-                <button className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'>
-                  Đăng xuất
-                </button>
+          {isAuthenticated && (
+            <Popover
+              as='section'
+              initialOpen={false}
+              className='ml-6 flex cursor-pointer items-center py-1 hover:text-gray-300'
+              renderPopover={
+                <div className='relative rounded-sm border border-gray-200 bg-white shadow-md'>
+                  <Link
+                    to='/profile'
+                    className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
+                  >
+                    Tài khoản của tôi
+                  </Link>
+                  <Link
+                    to='/'
+                    className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
+                  >
+                    Đơn mua
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
+              }
+            >
+              <div className='mr-2 h-6 w-6 flex-shrink-0'>
+                <img
+                  src='https://images.unsplash.com/photo-1689152842048-6f0e4ef8e3f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+                  alt='avarta'
+                  className='h-full w-full rounded-full object-cover'
+                />
               </div>
-            }
-          >
-            <div className='mr-2 h-6 w-6 flex-shrink-0'>
-              <img
-                src='https://images.unsplash.com/photo-1689152842048-6f0e4ef8e3f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
-                alt='avarta'
-                className='h-full w-full rounded-full object-cover'
-              />
+              <div>Hiệp Lê</div>
+            </Popover>
+          )}
+          {!isAuthenticated && (
+            <div className='flex items-center'>
+              <Link to='/register' className='mx-3 capitalize hover:text-white/70'>
+                Đăng ký
+              </Link>
+              <div className='border-f-white/40 h-4 border-r-[1px]'></div>
+              <Link to='/login' className='mx-3 capitalize hover:text-white/70'>
+                Đăng nhập
+              </Link>
             </div>
-            <div>Hiệp Lê</div>
-          </Popover>
+          )}
         </div>
         <div className='mt-4 grid grid-cols-12 items-end gap-4'>
           <Link to='/' className='col-span-2'>
@@ -127,9 +151,7 @@ export default function Header() {
               renderPopover={
                 <div className='relative max-w-[400px] rounded-sm border border-gray-200 bg-white text-sm shadow-md'>
                   <div className='p-2'>
-                    <div className='capitalize text-gray-400'>
-                      Sản phẩm mới thêm
-                    </div>
+                    <div className='capitalize text-gray-400'>Sản phẩm mới thêm</div>
                     <div className='mt-5'>
                       <div className='mt-4 flex'>
                         <div className='flex-shrink-0'>
@@ -141,9 +163,8 @@ export default function Header() {
                         </div>
                         <div className='ml-2 flex-grow overflow-hidden'>
                           <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho
-                            AirPods Pro 2nd Airpods pro / Airpod 3 / Airpod
-                            1/2（Not Airpods）
+                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
+                            Airpod 1/2（Not Airpods）
                           </div>
                         </div>
                         <div className='ml-2 flex-shrink-0'>
@@ -160,9 +181,8 @@ export default function Header() {
                         </div>
                         <div className='ml-2 flex-grow overflow-hidden'>
                           <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho
-                            AirPods Pro 2nd Airpods pro / Airpod 3 / Airpod
-                            1/2（Not Airpods）
+                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
+                            Airpod 1/2（Not Airpods）
                           </div>
                         </div>
                         <div className='ml-2 flex-shrink-0'>
@@ -179,9 +199,8 @@ export default function Header() {
                         </div>
                         <div className='ml-2 flex-grow overflow-hidden'>
                           <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho
-                            AirPods Pro 2nd Airpods pro / Airpod 3 / Airpod
-                            1/2（Not Airpods）
+                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
+                            Airpod 1/2（Not Airpods）
                           </div>
                         </div>
                         <div className='ml-2 flex-shrink-0'>
@@ -198,9 +217,8 @@ export default function Header() {
                         </div>
                         <div className='ml-2 flex-grow overflow-hidden'>
                           <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho
-                            AirPods Pro 2nd Airpods pro / Airpod 3 / Airpod
-                            1/2（Not Airpods）
+                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
+                            Airpod 1/2（Not Airpods）
                           </div>
                         </div>
                         <div className='ml-2 flex-shrink-0'>
@@ -217,9 +235,8 @@ export default function Header() {
                         </div>
                         <div className='ml-2 flex-grow overflow-hidden'>
                           <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho
-                            AirPods Pro 2nd Airpods pro / Airpod 3 / Airpod
-                            1/2（Not Airpods）
+                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
+                            Airpod 1/2（Not Airpods）
                           </div>
                         </div>
                         <div className='ml-2 flex-shrink-0'>
@@ -228,9 +245,7 @@ export default function Header() {
                       </div>
                     </div>
                     <div className='mt-6 flex items-center justify-between'>
-                      <div className='text-xs capitalize text-gray-500'>
-                        Thêm vào giỏ hàng
-                      </div>
+                      <div className='text-xs capitalize text-gray-500'>Thêm vào giỏ hàng</div>
                       <button className='caplitalize rounded-sm bg-orange px-4 py-2 text-white hover:bg-opacity-90'>
                         xem giỏ hàng
                       </button>

@@ -6,5 +6,4 @@ export const clearAccessTokenfromLS = () => {
   localStorage.remove('access_token')
 }
 
-export const getAcessTokenFromLS = () =>
-  localStorage.getItem('access_token') || ''
+export const getAcessTokenFromLS = () => localStorage.getItem('access_token') || ''

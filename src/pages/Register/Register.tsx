@@ -9,7 +9,7 @@ import Input from 'src/components/Input'
 import { FormData } from 'src/types/FormData'
 import { omit } from 'lodash'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
-import { ResponseApi } from 'src/types/utils.type'
+import { ErrorResponse } from 'src/types/utils.type'
 
 export default function Register() {
   const {
@@ -28,7 +28,7 @@ export default function Register() {
         console.log(data)
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntityError<ResponseApi<Omit<FormData, 'confirm_password'>>>(error)) {
+        if (isAxiosUnprocessableEntityError<ErrorResponse<Omit<FormData, 'confirm_password'>>>(error)) {
           const formError = error.response?.data.data
           //use Object loop to check
           if (formError) {
