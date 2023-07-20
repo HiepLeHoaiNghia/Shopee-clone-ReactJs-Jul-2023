@@ -1,12 +1,15 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Input from 'src/components/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Schema, schema } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
 import { loginAccount } from 'src/apis/auth.api'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
-import { ResponseApi } from 'src/types/utils.type'
+import { ErrorResponse } from 'src/types/utils.type'
+import { useContext } from 'react'
+import { AppContext } from 'src/contexts/app.context'
+import Button from 'src/components/Button'
 // type of formData without using yup to make Schema
 // import { FormData } from 'src/types/FormData'
 
@@ -14,6 +17,8 @@ type FormData = Omit<Schema, 'confirm_password'>
 export const loginSchema = schema.omit(['confirm_password'])
 
 export default function Login() {
+  const { setIsAuthenticated } = useContext(AppContext)
+  const navigate = useNavigate()
   const {
     register,
     setError,
@@ -26,10 +31,11 @@ export default function Login() {
   const onSubmit = handleSubmit((data) => {
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
-        console.log(data)
+        setIsAuthenticated(true)
+        navigate('/')
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntityError<ResponseApi<FormData>>(error)) {
+        if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
           const formError = error.response?.data.data
           //use Object loop to check
           if (formError) {
@@ -69,12 +75,14 @@ export default function Login() {
                 errorMessage={errors?.password?.message}
               />
               <div className='mt-2'>
-                <button
+                <Button
                   type='submit'
-                  className='w-full bg-red-500 px-2 py-4 text-center text-sm uppercase text-white hover:bg-red-600'
+                  className='flex w-full items-center justify-center bg-red-500 px-2 py-4 text-center text-sm uppercase text-white hover:bg-red-600'
+                  isLoading={loginAccountMutation.isLoading}
+                  disabled={loginAccountMutation.isLoading}
                 >
                   Đăng nhập
-                </button>
+                </Button>
               </div>
               <div className='mt-8 flex items-center justify-center'>
                 <span className='text-gray-400'>Bạn chưa có tài khoản?</span>
