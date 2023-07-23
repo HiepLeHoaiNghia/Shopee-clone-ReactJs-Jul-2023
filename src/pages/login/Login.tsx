@@ -4,7 +4,7 @@ import Input from 'src/components/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Schema, schema } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
-import { loginAccount } from 'src/apis/auth.api'
+import authApi from 'src/apis/auth.api'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import { useContext } from 'react'
@@ -26,7 +26,7 @@ export default function Login() {
     formState: { errors }
   } = useForm<FormData>({ resolver: yupResolver(loginSchema) })
   const loginAccountMutation = useMutation({
-    mutationFn: (body: Omit<FormData, 'confirm_password'>) => loginAccount(body)
+    mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.loginAccount(body)
   })
   const onSubmit = handleSubmit((data) => {
     loginAccountMutation.mutate(data, {
@@ -64,7 +64,7 @@ export default function Login() {
                 register={register}
                 type='email'
                 className='mt-8'
-                placeHolder='Email'
+                placeholder='Email'
                 errorMessage={errors?.email?.message}
               />
               <Input
@@ -72,7 +72,7 @@ export default function Login() {
                 register={register}
                 type='password'
                 className='mt-2'
-                placeHolder='Password'
+                placeholder='Password'
                 errorMessage={errors?.password?.message}
               />
               <div className='mt-2'>
