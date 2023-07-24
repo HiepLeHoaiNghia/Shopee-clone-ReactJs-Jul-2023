@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { schema, Schema } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
-import { registerAccount } from 'src/apis/auth.api'
+import authApi from 'src/apis/auth.api'
 import Input from 'src/components/Input'
 // type of formData without using yup to make Schema
 import { FormData } from 'src/types/FormData'
@@ -24,7 +24,7 @@ export default function Register() {
     formState: { errors }
   } = useForm<Schema>({ resolver: yupResolver(schema) })
   const registerAccountMutation = useMutation({
-    mutationFn: (body: Omit<FormData, 'confirm_password'>) => registerAccount(body)
+    mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.registerAccount(body)
   })
   const onSubmit = handleSubmit((data) => {
     const body = omit(data, ['confirm_password'])
@@ -75,7 +75,7 @@ export default function Register() {
                 register={register}
                 type='email'
                 className='mt-8'
-                placeHolder='Email'
+                placeholder='Email'
                 errorMessage={errors?.email?.message}
               />
               <Input
@@ -84,7 +84,7 @@ export default function Register() {
                 register={register}
                 type='password'
                 className='mt-2'
-                placeHolder='Password'
+                placeholder='Password'
                 errorMessage={errors?.password?.message}
               />
               <Input
@@ -93,7 +93,7 @@ export default function Register() {
                 register={register}
                 type='password'
                 className='mt-2'
-                placeHolder='Confirm Password'
+                placeholder='Confirm Password'
                 errorMessage={errors?.confirm_password?.message}
               />
               <div className='mt-2'>
