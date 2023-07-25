@@ -42,7 +42,14 @@ module.exports = {
     //Tắt check !boolean
     'no-extra-boolean-cast': 0,
     //cảnh báo với biến k đc sử dụng
-    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        ignoreRestSiblings: true,
+        destructuredArrayIgnorePattern: '[A-Z]',
+        caughtErrors: 'none'
+      }
+    ],
     '@typescript-eslint/no-explicit-any': 'warn',
     'prettier/prettier': [
       'warn',

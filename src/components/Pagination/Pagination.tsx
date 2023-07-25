@@ -49,7 +49,6 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
           if (pageNumber < page - RANGE && pageNumber > RANGE) {
             return renderDotBefore(index)
           } else if (pageNumber > page + RANGE && pageNumber < pageSize - RANGE + 1) {
-            console.log('pageNumber', pageNumber)
             return renderDotAfter(index)
           }
         } else if (page >= pageSize - RANGE * 2 && pageNumber > RANGE && pageNumber < pageSize - RANGE) {
