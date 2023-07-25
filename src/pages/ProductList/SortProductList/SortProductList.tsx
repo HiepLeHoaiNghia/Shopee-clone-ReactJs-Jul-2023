@@ -21,25 +21,25 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
   const handleSort = (sortByValue: Exclude<ProductListConfig['sort_by'], undefined>) => {
     navigate({
       pathname: path.home,
-      search: createSearchParams({
-        ...queryConfig,
-        sort_by: sortByValue
-      }).toString()
+      search: createSearchParams(
+        omit(
+          {
+            ...queryConfig,
+            sort_by: sortByValue
+          },
+          ['order']
+        )
+      ).toString()
     })
   }
   const handlePriceOrder = (orderValue: Exclude<ProductListConfig['order'], undefined>) => {
     navigate({
       pathname: path.home,
-      search: createSearchParams(
-        omit(
-          {
-            ...queryConfig,
-            sort_by: sortBy.price,
-            order: orderValue
-          },
-          ['order']
-        )
-      ).toString()
+      search: createSearchParams({
+        ...queryConfig,
+        sort_by: sortBy.price,
+        order: orderValue
+      }).toString()
     })
   }
   return (
@@ -79,10 +79,10 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
               'bg-orange text-white hover:bg-orange/80': isActiveSortBy(sortBy.price),
               'bg-white text-black hover:bg-slate-100': !isActiveSortBy(sortBy.price)
             })}
-            value={order || 'default'}
+            value={order || ''}
             onChange={(event) => handlePriceOrder(event.target.value as Exclude<ProductListConfig['order'], undefined>)}
           >
-            <option value='default' disabled className='bg-white text-black'>
+            <option value='' disabled className='bg-white text-black'>
               Giá
             </option>
             <option value={orderConstant.asc} className='bg-white text-black'>

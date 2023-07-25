@@ -7,7 +7,6 @@ import { AppProvider } from './contexts/app.context'
 import App from './App'
 
 import './index.css'
-//test pull cancel
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
