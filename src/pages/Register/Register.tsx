@@ -6,14 +6,14 @@ import { useMutation } from '@tanstack/react-query'
 import authApi from 'src/apis/auth.api'
 import Input from 'src/components/Input'
 // type of formData without using yup to make Schema
-import { FormData } from 'src/types/FormData'
 import { omit } from 'lodash'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import Button from 'src/components/Button'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
-
+type FormData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
+export const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 export default function Register() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
@@ -22,7 +22,7 @@ export default function Register() {
     handleSubmit,
     setError,
     formState: { errors }
-  } = useForm<Schema>({ resolver: yupResolver(schema) })
+  } = useForm<Schema>({ resolver: yupResolver(registerSchema) })
   const registerAccountMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.registerAccount(body)
   })
