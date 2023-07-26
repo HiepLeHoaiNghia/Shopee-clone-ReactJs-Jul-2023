@@ -1,21 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, forwardRef } from 'react'
 import type { RegisterOptions, UseFormRegister } from 'react-hook-form'
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   classNameInput?: string
   classNameError?: string
 }
 
-export default function InputNumber({
-  errorMessage,
-  className,
-  classNameInput = 'w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm',
-  classNameError = 'mt-1 min-h-[1.25rem] text-sm text-red-600',
-  onChange,
-  ...rest
-}: Props) {
+const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function InputNumberInner(
+  {
+    errorMessage,
+    className,
+    classNameInput = 'w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm',
+    classNameError = 'mt-1 min-h-[1.25rem] text-sm text-red-600',
+    onChange,
+    ...rest
+  },
+  ref
+) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
     if ((/^\d+$/.test(value) || value === '') && onChange) {
@@ -24,8 +27,9 @@ export default function InputNumber({
   }
   return (
     <div className={className}>
-      <input className={classNameInput} {...rest} />
+      <input className={classNameInput} onChange={handleChange} {...rest} ref={ref} />
       <div className={classNameError}>{errorMessage}</div>
     </div>
   )
-}
+})
+export default InputNumber

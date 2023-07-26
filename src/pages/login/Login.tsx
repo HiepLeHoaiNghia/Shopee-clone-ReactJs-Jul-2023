@@ -13,8 +13,8 @@ import Button from 'src/components/Button'
 // type of formData without using yup to make Schema
 // import { FormData } from 'src/types/FormData'
 
-type FormData = Omit<Schema, 'confirm_password'>
-export const loginSchema = schema.omit(['confirm_password'])
+type FormData = Pick<Schema, 'email' | 'password'>
+export const loginSchema = schema.pick(['email', 'password'])
 
 export default function Login() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
