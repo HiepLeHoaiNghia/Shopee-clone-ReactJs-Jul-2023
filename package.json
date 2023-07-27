@@ -30,6 +30,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.2",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.4.1",
     "@types/react": "^18.2.14",
@@ -38,6 +39,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "autoprefixer": "^10.4.14",
+    "dompurify": "^3.0.5",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-import-resolver-typescript": "^3.5.5",
