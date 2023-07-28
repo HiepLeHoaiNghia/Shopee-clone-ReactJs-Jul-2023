@@ -2,14 +2,15 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import ProductRating from '../ProductList/components/ProductRating/ProductRating'
-import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/utils'
+import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils'
 import InputNumber from 'src/components/InputNumber'
 import DOMPurify from 'dompurify'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Product } from 'src/types/product.type'
 
 export default function ProductDetail() {
-  const { id } = useParams()
+  const { nameId } = useParams()
+  const id = getIdFromNameId(nameId as string)
   const { data: productDetailData } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
@@ -46,9 +47,9 @@ export default function ProductDetail() {
     const { naturalHeight, naturalWidth } = image
     // Cách 1: Lấy offsetX, offsetY khi xử lý đc bubble event
     // const { offsetX, offsetY } = event.nativeEvent
-    // Cách 1: Lấy offsetX, offsetY khi k xử lý đc bubble event
+    // Cách 2: Lấy offsetX, offsetY khi k xử lý đc bubble event
     const offsetX = event.pageX - (rect.x + window.scrollX)
-    const offsetY = event.pageX - (rect.y + window.scrollY)
+    const offsetY = event.pageY - (rect.y + window.scrollY)
     const top = offsetY * (1 - naturalHeight / rect.height)
     const left = offsetX * (1 - naturalWidth / rect.width)
     image.style.width = naturalWidth + 'px'
