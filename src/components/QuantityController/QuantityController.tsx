@@ -14,7 +14,7 @@ const QuantityController = ({
   onDecrease,
   onType,
   classNameWrapper = 'ml-10',
-  value,
+  value: buyCount,
   ...rest
 }: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,14 +27,14 @@ const QuantityController = ({
     onType && onType(_value)
   }
   const increase = () => {
-    let _value = Number(value) + 1
+    let _value = Number(buyCount) + 1
     if (max !== undefined && _value > max) {
       _value = max
     }
     onIncrease && onIncrease(_value)
   }
   const decrease = () => {
-    let _value = Number(value) - 1
+    let _value = Number(buyCount) - 1
     if (max !== undefined && _value < 1) {
       _value = 1
     }
@@ -59,7 +59,7 @@ const QuantityController = ({
       </button>
       <InputNumber
         onChange={handleChange}
-        value={value}
+        value={buyCount}
         className=''
         classNameError='hidden'
         classNameInput='h-8 w-14 border-b border-t border-gray-300 p-1 text-center outline-none'
