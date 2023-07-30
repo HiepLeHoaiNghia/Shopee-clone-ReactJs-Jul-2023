@@ -1,14 +1,30 @@
-import { Link } from 'react-router-dom'
+import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Popover from '../Popover'
 import { useMutation } from '@tanstack/react-query'
 import { useContext } from 'react'
 import authApi from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
 import path from 'src/constants/path'
+import useQueryConfig from 'src/hooks/useQueryConfig'
+import { useForm } from 'react-hook-form'
+import { Schema, schema } from 'src/utils/rules'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { omit } from 'lodash'
+import { ObjectSchema } from 'yup'
+
+type FormData = Pick<Schema, 'name'>
+const nameSchema = schema.pick(['name'])
 
 export default function Header() {
+  const queryConfig = useQueryConfig()
+  const navigate = useNavigate()
+  const { register, handleSubmit } = useForm<FormData>({
+    defaultValues: {
+      name: ''
+    },
+    resolver: yupResolver<FormData>(nameSchema as ObjectSchema<FormData>)
+  })
   const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext)
-
   const logoutMutation = useMutation({
     mutationFn: authApi.logoutAccount,
     onSuccess: () => {
@@ -16,10 +32,34 @@ export default function Header() {
       setProfile(null)
     }
   })
-
   const handleLogout = () => {
     logoutMutation.mutate()
   }
+  const onSubmitSearch = handleSubmit((data) => {
+    if (data.name === '') {
+      navigate({
+        pathname: path.home,
+        search: ''
+      })
+    } else {
+      const config = queryConfig.order
+        ? omit(
+            {
+              ...queryConfig,
+              name: data.name
+            },
+            ['sort_by', 'order']
+          )
+        : omit({
+            ...queryConfig,
+            name: data.name
+          })
+      navigate({
+        pathname: path.home,
+        search: createSearchParams(config as unknown as string).toString()
+      })
+    }
+  })
   return (
     <div className='bg-[linear-gradient(-180deg,#ee4d2d,#ff6433)] pb-5 pt-2 text-white'>
       <div className='container'>
@@ -121,14 +161,13 @@ export default function Header() {
               </g>
             </svg>
           </Link>
-          <form className='col-span-9'>
+          <form className='col-span-9' onSubmit={onSubmitSearch}>
             <div className='flex rounded-sm bg-white p-1'>
               <input
                 type='text'
-                name='search'
-                id=''
                 className='flex-grow border-none bg-transparent px-3 py-2 text-black outline-none'
                 placeholder='Free Ship Đơn Từ 0Đ'
+                {...register('name')}
               />
               <button className='flex-shrink-0 rounded-sm bg-orange px-6 py-2 hover:opacity-90'>
                 <svg
