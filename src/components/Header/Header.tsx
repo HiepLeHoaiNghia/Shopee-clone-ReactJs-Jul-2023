@@ -1,6 +1,6 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Popover from '../Popover'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useContext } from 'react'
 import authApi from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
@@ -11,10 +11,13 @@ import { Schema, schema } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { omit } from 'lodash'
 import { ObjectSchema } from 'yup'
-
+import { purchasesStatus } from 'src/constants/purchase'
+import purchaseApi from 'src/apis/purchase.api'
+import no_product from 'src/assets/images/no_product.png'
+import { formatCurrency } from 'src/utils/utils'
 type FormData = Pick<Schema, 'name'>
 const nameSchema = schema.pick(['name'])
-
+const MAX_PURCHASES = 5
 export default function Header() {
   const queryConfig = useQueryConfig()
   const navigate = useNavigate()
@@ -32,6 +35,11 @@ export default function Header() {
       setProfile(null)
     }
   })
+  const { data: purchaseInCartData } = useQuery({
+    queryKey: ['purchases', { status: purchasesStatus.inCart }],
+    queryFn: () => purchaseApi.getPurchaseList({ status: purchasesStatus.inCart })
+  })
+  const purchaseInCart = purchaseInCartData?.data.data
   const handleLogout = () => {
     logoutMutation.mutate()
   }
@@ -191,112 +199,50 @@ export default function Header() {
             <Popover
               renderPopover={
                 <div className='relative max-w-[400px] rounded-sm border border-gray-200 bg-white text-sm shadow-md'>
-                  <div className='p-2'>
-                    <div className='capitalize text-gray-400'>Sản phẩm mới thêm</div>
-                    <div className='mt-5'>
-                      <div className='mt-4 flex'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://down-vn.img.susercontent.com/file/41a3a6eb048036feb7f4c6eb534c1a1a_tn'
-                            alt='anh'
-                            className='h-11 w-11 object-cover'
-                          />
-                        </div>
-                        <div className='ml-2 flex-grow overflow-hidden'>
-                          <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
-                            Airpod 1/2（Not Airpods）
+                  {purchaseInCart ? (
+                    <div className='p-2'>
+                      <div className='capitalize text-gray-400'>Sản phẩm mới thêm</div>
+                      <div className='mt-5'>
+                        {purchaseInCart.slice(0, MAX_PURCHASES).map((purchase) => (
+                          <div className='mt-2 flex cursor-pointer py-3 pr-2 hover:bg-gray-200' key={purchase._id}>
+                            <div className='flex-shrink-0'>
+                              <img
+                                src={purchase.product.image}
+                                alt={purchase.product.name}
+                                className='my-[-0.75rem] h-11 w-11 object-cover'
+                              />
+                            </div>
+                            <div className='ml-2 flex-grow overflow-hidden'>
+                              <div className='truncate'>{purchase.product.name}</div>
+                            </div>
+                            <div className='ml-2 flex-shrink-0'>
+                              <span className='text-xs text-orange'>₫</span>
+                              <span className='text-sm text-orange'>{formatCurrency(purchase.product.price)}</span>
+                            </div>
                           </div>
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orange'>₫9.000</span>
-                        </div>
+                        ))}
                       </div>
-                      <div className='mt-4 flex'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://down-vn.img.susercontent.com/file/41a3a6eb048036feb7f4c6eb534c1a1a_tn'
-                            alt='anh'
-                            className='h-11 w-11 object-cover'
-                          />
+                      <div className='mt-6 flex items-center justify-between'>
+                        <div className='text-xs capitalize text-gray-500'>
+                          {purchaseInCart.length > MAX_PURCHASES ? purchaseInCart.length - MAX_PURCHASES : ''} Thêm vào
+                          giỏ hàng
                         </div>
-                        <div className='ml-2 flex-grow overflow-hidden'>
-                          <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
-                            Airpod 1/2（Not Airpods）
-                          </div>
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orange'>₫9.000</span>
-                        </div>
-                      </div>
-                      <div className='mt-4 flex'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://down-vn.img.susercontent.com/file/41a3a6eb048036feb7f4c6eb534c1a1a_tn'
-                            alt='anh'
-                            className='h-11 w-11 object-cover'
-                          />
-                        </div>
-                        <div className='ml-2 flex-grow overflow-hidden'>
-                          <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
-                            Airpod 1/2（Not Airpods）
-                          </div>
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orange'>₫9.000</span>
-                        </div>
-                      </div>
-                      <div className='mt-4 flex'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://down-vn.img.susercontent.com/file/41a3a6eb048036feb7f4c6eb534c1a1a_tn'
-                            alt='anh'
-                            className='h-11 w-11 object-cover'
-                          />
-                        </div>
-                        <div className='ml-2 flex-grow overflow-hidden'>
-                          <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
-                            Airpod 1/2（Not Airpods）
-                          </div>
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orange'>₫9.000</span>
-                        </div>
-                      </div>
-                      <div className='mt-4 flex'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://down-vn.img.susercontent.com/file/41a3a6eb048036feb7f4c6eb534c1a1a_tn'
-                            alt='anh'
-                            className='h-11 w-11 object-cover'
-                          />
-                        </div>
-                        <div className='ml-2 flex-grow overflow-hidden'>
-                          <div className='truncate'>
-                            Vỏ bảo vệ hộp tai nghe bằng silicon dẻo cao cấp cho AirPods Pro 2nd Airpods pro / Airpod 3 /
-                            Airpod 1/2（Not Airpods）
-                          </div>
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orange'>₫9.000</span>
-                        </div>
+                        <button className='caplitalize rounded-sm bg-orange px-4 py-2 text-white hover:bg-opacity-90'>
+                          xem giỏ hàng
+                        </button>
                       </div>
                     </div>
-                    <div className='mt-6 flex items-center justify-between'>
-                      <div className='text-xs capitalize text-gray-500'>Thêm vào giỏ hàng</div>
-                      <button className='caplitalize rounded-sm bg-orange px-4 py-2 text-white hover:bg-opacity-90'>
-                        xem giỏ hàng
-                      </button>
+                  ) : (
+                    <div className='flex h-[300px] w-[300px] flex-col items-center justify-center p-2'>
+                      <img src={no_product} alt='no purchase' className='h-24 w-24' />
+                      <div className='mt-3 capitalize'>Chưa có sản phẩm nào</div>
                     </div>
-                  </div>
+                  )}
                 </div>
               }
               className='cols-span-1 flex h-full items-center'
             >
-              <Link to={path.home}>
+              <Link to={path.home} className='relative'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -311,6 +257,9 @@ export default function Header() {
                     d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                   />
                 </svg>
+                <span className='absolute right-[-8px] top-[-5px] rounded-xl bg-white px-2  text-xs text-orange'>
+                  {purchaseInCart?.length}
+                </span>
               </Link>
             </Popover>
           </div>
