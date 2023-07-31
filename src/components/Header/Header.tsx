@@ -1,6 +1,10 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Popover from '../Popover'
+<<<<<<< HEAD
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+=======
+import { useMutation, useQuery } from '@tanstack/react-query'
+>>>>>>> b5a01a4 (add product to cart | show products in cart)
 import { useContext } from 'react'
 import authApi from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
@@ -39,8 +43,12 @@ export default function Header() {
   })
   const { data: purchaseInCartData } = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
+<<<<<<< HEAD
     queryFn: () => purchaseApi.getPurchaseList({ status: purchasesStatus.inCart }),
     enabled: isAuthenticated
+=======
+    queryFn: () => purchaseApi.getPurchaseList({ status: purchasesStatus.inCart })
+>>>>>>> b5a01a4 (add product to cart | show products in cart)
   })
   const purchaseInCart = purchaseInCartData?.data.data
   const handleLogout = () => {
@@ -230,12 +238,18 @@ export default function Header() {
                           {purchaseInCart.length > MAX_PURCHASES ? purchaseInCart.length - MAX_PURCHASES : ''} Thêm vào
                           giỏ hàng
                         </div>
+<<<<<<< HEAD
                         <Link
                           to={path.cart}
                           className='caplitalize rounded-sm bg-orange px-4 py-2 text-white hover:bg-opacity-90'
                         >
                           xem giỏ hàng
                         </Link>
+=======
+                        <button className='caplitalize rounded-sm bg-orange px-4 py-2 text-white hover:bg-opacity-90'>
+                          xem giỏ hàng
+                        </button>
+>>>>>>> b5a01a4 (add product to cart | show products in cart)
                       </div>
                     </div>
                   ) : (
@@ -263,11 +277,17 @@ export default function Header() {
                     d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                   />
                 </svg>
+<<<<<<< HEAD
                 {purchaseInCart && (
                   <span className='absolute right-[-8px] top-[-5px] rounded-xl bg-white px-2  text-xs text-orange'>
                     {purchaseInCart?.length}
                   </span>
                 )}
+=======
+                <span className='absolute right-[-8px] top-[-5px] rounded-xl bg-white px-2  text-xs text-orange'>
+                  {purchaseInCart?.length}
+                </span>
+>>>>>>> b5a01a4 (add product to cart | show products in cart)
               </Link>
             </Popover>
           </div>
