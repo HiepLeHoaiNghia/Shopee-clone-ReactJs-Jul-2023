@@ -46,7 +46,7 @@ const QuantityController = ({
     setLocalValue(_value)
   }
   return (
-    <div className={'ml-10 flex items-center' + classNameWrapper}>
+    <div className={'flex items-center' + classNameWrapper}>
       <button
         onClick={decrease}
         className='flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600'
