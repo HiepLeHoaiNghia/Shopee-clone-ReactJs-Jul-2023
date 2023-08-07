@@ -179,13 +179,13 @@ export default function Cart() {
                               >
                                 <img className='' alt={purchase.product.name} src={purchase.product.image} />
                               </Link>
-                              <div className='flex-grow px-2 pb-2 pt-1'>
+                              <div className='flex-grow px-2 pb-2 pt-1 text-left'>
                                 <Link
                                   to={`${path.home}${generateNameId({
                                     name: purchase.product.name,
                                     id: purchase.product._id
                                   })}`}
-                                  className='text-left line-clamp-2'
+                                  className='line-clamp-2'
                                 >
                                   {purchase.product.name}
                                 </Link>
