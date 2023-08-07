@@ -17,7 +17,7 @@ const QuantityController = ({
   onType,
   onFocusOut,
   classNameWrapper = 'ml-10',
-  value,
+  value: buyCount,
   ...rest
 }: Props) => {
   const [localValue, setLocalValue] = useState<number>(Number(value || 0))
