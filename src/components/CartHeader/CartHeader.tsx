@@ -24,7 +24,7 @@ export default function CartHeader() {
                   </g>
                 </svg>
               </div>
-              <div className='mx-4 h-6 w-0.5 rounded-full bg-orange md:h-8' />
+              <div className='mx-4 h-6 w-px rounded-full bg-orange md:h-8' />
               <div className='capitalize text-orange md:text-xl'>Giỏ hàng</div>
             </Link>
             <form className='mt-3 md:mt-0 md:w-[50%]' onSubmit={onSubmitSearch}>
