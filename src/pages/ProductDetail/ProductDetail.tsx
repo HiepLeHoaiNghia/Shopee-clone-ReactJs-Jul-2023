@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import ProductRating from '../ProductList/components/ProductRating/ProductRating'
 import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils'
@@ -11,11 +11,13 @@ import QuantityController from 'src/components/QuantityController'
 import purchaseApi from 'src/apis/purchase.api'
 import { purchasesStatus } from 'src/constants/purchase'
 import { toast } from 'react-toastify'
+import path from 'src/constants/path'
 
 export default function ProductDetail() {
   const [buyCount, setBuyCount] = useState(1)
   const queryClient = useQueryClient()
   const { nameId } = useParams()
+  const navigate = useNavigate()
   const id = getIdFromNameId(nameId as string)
   const { data: productDetailData } = useQuery({
     queryKey: ['product', id],
@@ -58,6 +60,7 @@ export default function ProductDetail() {
   const chooseActive = (img: string) => {
     setActiveImage(img)
   }
+
   const handleZoom = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = event.currentTarget.getBoundingClientRect()
     const image = imageRef.current as HTMLImageElement
@@ -75,6 +78,7 @@ export default function ProductDetail() {
     image.style.top = top + 'px'
     image.style.left = left + 'px'
   }
+
   const handleRemoveZoom = () => {
     imageRef.current?.removeAttribute('style')
   }
@@ -92,6 +96,17 @@ export default function ProductDetail() {
       }
     )
   }
+
+  const handleBuyNow = async () => {
+    const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: product?._id as string })
+    const purchase = res.data.data
+    navigate(path.cart, {
+      state: {
+        purchaseId: purchase._id
+      }
+    })
+  }
+
   if (!product) return null
   return (
     <div className='bg-gray-200 py-6 '>
@@ -220,7 +235,10 @@ export default function ProductDetail() {
                   </svg>
                   Thêm vào giỏ hàng
                 </button>
-                <button className='ml-4 flex h-12 min-w-[5rem] items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90'>
+                <button
+                  onClick={handleBuyNow}
+                  className='ml-4 flex h-12 min-w-[5rem] items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90'
+                >
                   Mua ngay
                 </button>
               </div>
