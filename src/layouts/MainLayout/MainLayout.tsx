@@ -9,7 +9,7 @@ export default function MainLayout({ children }: Props) {
   return (
     <div className='flex min-h-screen flex-col'>
       <Header />
-      <div className='flex-1'>{children}</div>
+      <div className='flex flex-1 items-stretch justify-center'>{children}</div>
       <Footer />
     </div>
   )
