@@ -5,12 +5,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AppProvider } from './contexts/app.context'
 import App from './App'
-
 import './index.css'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      retry: 0
     }
   }
 })
