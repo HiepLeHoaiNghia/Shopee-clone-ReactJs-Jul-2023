@@ -6,7 +6,7 @@ import { AppContext } from 'src/contexts/app.context'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import authApi from 'src/apis/auth.api'
 import { purchasesStatus } from 'src/constants/purchase'
-
+import userDefaultAvatar from 'src/assets/svg/userDefaultAvatar.svg'
 export default function NavHeader() {
   const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext)
   const queryClient = useQueryClient()
@@ -92,8 +92,12 @@ export default function NavHeader() {
         >
           <div className='mr-2 h-6 w-6 flex-shrink-0'>
             <img
-              src='https://images.unsplash.com/photo-1689152842048-6f0e4ef8e3f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
-              alt='avarta'
+              src={
+                !profile?.avatar || (!profile.avatar.endsWith('.png') && !profile.avatar.endsWith('.jpeg'))
+                  ? userDefaultAvatar
+                  : profile.avatar
+              }
+              alt='avatar'
               className='h-full w-full rounded-full object-cover'
             />
           </div>
