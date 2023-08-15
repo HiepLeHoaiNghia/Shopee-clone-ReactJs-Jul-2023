@@ -178,7 +178,6 @@ export default function Profile() {
                   errorMessage={errors.address?.message}
                 />
               </div>
-              I
             </div>
             <Controller
               control={control}
