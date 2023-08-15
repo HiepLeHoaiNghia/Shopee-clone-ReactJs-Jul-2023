@@ -1,5 +1,7 @@
 import axios, { AxiosError, HttpStatusCode } from 'axios'
 import exp from 'constants'
+import config from 'src/constants/config'
+import userDefaultAvatar from 'src/assets/svg/userDefaultAvatar.svg'
 
 export function isAxiosError<T>(error: unknown): error is AxiosError<T> {
   // eslint-disable-next-line import/no-named-as-default-member
@@ -41,3 +43,8 @@ export const getIdFromNameId = (nameId: string) => {
   const arr = nameId.split('-i-')
   return arr[arr.length - 1]
 }
+
+export const getAvatarUrl = (avatarName?: string) =>
+  !avatarName || (!avatarName.endsWith('.png') && !avatarName.endsWith('.jpg'))
+    ? userDefaultAvatar
+    : `${config.baseUrl}images/${avatarName}`
