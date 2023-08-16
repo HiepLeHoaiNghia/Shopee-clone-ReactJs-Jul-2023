@@ -1,27 +1,24 @@
+import classNames from 'classnames'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import path from 'src/constants/path'
 import { AppContext } from 'src/contexts/app.context'
-import userDefaultAvatar from 'src/assets/svg/userDefaultAvatar.svg'
+import { getAvatarUrl } from 'src/utils/utils'
 export default function UserSideNav() {
   const { profile } = useContext(AppContext)
+  if (!profile) return null
   return (
     <div>
       <div className='flex items-center border-b border-b-gray-200 py-4'>
         <Link to={path.profile} className='h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10'>
-          <img
-            src={
-              !profile?.avatar || (!profile.avatar.endsWith('.png') && !profile.avatar.endsWith('.jpeg'))
-                ? userDefaultAvatar
-                : profile.avatar
-            }
-            alt='avatar'
-            className='h-full w-full'
-          />
+          <img src={getAvatarUrl(profile.avatar)} alt='avatar' className='h-full w-full' />
         </Link>
         <div className='flex-grow pl-4'>
           <div className='mb-1 truncate font-semibold text-gray-600'>{profile?.email}</div>
-          <Link to={path.profile} className='flex items-center capitalize text-gray-500'>
+          <Link
+            to={path.profile}
+            className='flex items-center capitalize text-gray-500 hover:fill-orange hover:stroke-orange hover:text-orange'
+          >
             <svg
               width={12}
               height={12}
@@ -40,22 +37,87 @@ export default function UserSideNav() {
         </div>
       </div>
       <div className='mt-7'>
-        <Link to={path.profile} className='flex items-center capitalize text-orange transition-colors'>
+        <NavLink
+          to={path.profile}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize text-gray-500', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive
+            })
+          }
+        >
           <div className='mr-3 h-[22px] w-[22px]'>
-            <img src='https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4' alt='' className='h-full w-full' />
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='h-6 w-6'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z'
+              />
+            </svg>
           </div>
           Tài khoản của tôi
-        </Link>
-        <Link to={path.changePassword} className='flex items-center capitalize text-orange transition-colors'>
-          <div className='mr-3 h-[22px] w-[22px]'></div>
-          Đổi mật khẩu
-        </Link>
-        <Link to={path.historyPurchase} className='flex items-center capitalize text-orange transition-colors'>
+        </NavLink>
+        <NavLink
+          to={path.changePassword}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize text-gray-500', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive
+            })
+          }
+        >
           <div className='mr-3 h-[22px] w-[22px]'>
-            <img src='https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078' alt='' className='h-full w-full' />
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='h-6 w-6'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5'
+              />
+            </svg>
+          </div>
+          Đổi mật khẩu
+        </NavLink>
+        <NavLink
+          to={path.historyPurchase}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize text-gray-500', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive
+            })
+          }
+        >
+          <div className='mr-3 h-[22px] w-[22px]'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='h-6 w-6'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z'
+              />
+            </svg>
           </div>
           Đơn mua
-        </Link>
+        </NavLink>
       </div>
     </div>
   )

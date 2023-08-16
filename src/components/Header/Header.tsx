@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
 import { useQuery } from '@tanstack/react-query'
-import { useContext } from 'react'
-import { AppContext } from 'src/contexts/app.context'
 import { purchasesStatus } from 'src/constants/purchase'
 import purchaseApi from 'src/apis/purchase.api'
 import no_product from 'src/assets/images/no_product.png'
