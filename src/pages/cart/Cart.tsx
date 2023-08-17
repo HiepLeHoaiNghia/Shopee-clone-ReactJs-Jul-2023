@@ -10,7 +10,7 @@ import { AppContext } from 'src/contexts/app.context'
 import { Purchase } from 'src/types/purchase.type'
 import { formatCurrency, generateNameId } from 'src/utils/utils'
 import { produce } from 'immer'
-import { keyBy } from 'lodash'
+import keyBy from 'lodash/keyBy'
 import { toast } from 'react-toastify'
 import no_product from 'src/assets/images/no_product.png'
 

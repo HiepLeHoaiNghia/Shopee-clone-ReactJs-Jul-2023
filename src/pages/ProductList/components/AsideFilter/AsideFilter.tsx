@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import RatingStars from '../RatingStars'
 import { NoUndefinedField } from 'src/types/utils.type'
 import { ObjectSchema } from 'yup'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { InputVer2 } from 'src/components/InputVer2'
 interface Props {
