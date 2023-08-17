@@ -18,11 +18,8 @@ const passwordSchema = userSchema.pick(['password', 'new_password', 'confirm_pas
 export default function ChangePassword() {
   const {
     register,
-    control,
     formState: { errors },
     handleSubmit,
-    setValue,
-    watch,
     reset,
     setError
   } = useForm<FormData>({
