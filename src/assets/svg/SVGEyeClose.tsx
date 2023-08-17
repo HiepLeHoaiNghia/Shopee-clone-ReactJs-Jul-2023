@@ -1,7 +1,7 @@
 import { svgType } from 'src/types/svg.type'
 
 export default function SVGEyeClose({
-  className = 'right-1.5 top-1.5 w-6 h-6 cursor-pointer',
+  className = 'right-1.5 top-2.5 w-6 h-6 cursor-pointer',
   strokeColor = 'currentColor',
   strokeWidth = 1.5,
   fillColor = 'none',
@@ -14,7 +14,7 @@ export default function SVGEyeClose({
       viewBox='0 0 24 24'
       strokeWidth={strokeWidth}
       stroke={strokeColor}
-      className={`absolute right-1.5 top-1.5 cursor-pointer ${className}`}
+      className={`absolute right-1.5 top-2.5 cursor-pointer ${className}`}
       onClick={onClick}
     >
       <path

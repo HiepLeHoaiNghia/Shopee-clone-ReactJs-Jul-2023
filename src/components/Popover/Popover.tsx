@@ -1,7 +1,6 @@
 import { useRef, useState, type ElementType } from 'react'
 import { FloatingPortal, arrow, offset, shift, useFloating, type Placement } from '@floating-ui/react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { initial } from 'lodash'
 
 interface Props {
   children: React.ReactNode

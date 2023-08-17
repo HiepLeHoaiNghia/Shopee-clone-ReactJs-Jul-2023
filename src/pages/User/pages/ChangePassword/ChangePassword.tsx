@@ -8,7 +8,7 @@ import userApi, { BodyUpdateProfile } from 'src/apis/user.api'
 import { toast } from 'react-toastify'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse, NoUndefinedField } from 'src/types/utils.type'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ObjectSchema } from 'yup'
 
@@ -18,11 +18,8 @@ const passwordSchema = userSchema.pick(['password', 'new_password', 'confirm_pas
 export default function ChangePassword() {
   const {
     register,
-    control,
     formState: { errors },
     handleSubmit,
-    setValue,
-    watch,
     reset,
     setError
   } = useForm<FormData>({

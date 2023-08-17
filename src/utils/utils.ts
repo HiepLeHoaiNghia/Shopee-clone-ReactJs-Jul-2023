@@ -1,5 +1,4 @@
 import axios, { AxiosError, HttpStatusCode } from 'axios'
-import exp from 'constants'
 import config from 'src/constants/config'
 import userDefaultAvatar from 'src/assets/svg/userDefaultAvatar.svg'
 

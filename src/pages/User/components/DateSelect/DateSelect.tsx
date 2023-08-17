@@ -1,4 +1,4 @@
-import { range, set } from 'lodash'
+import range from 'lodash/range'
 import { useEffect, useState } from 'react'
 
 interface Props {
