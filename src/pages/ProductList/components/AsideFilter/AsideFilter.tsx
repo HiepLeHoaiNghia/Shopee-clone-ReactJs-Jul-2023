@@ -13,6 +13,7 @@ import { ObjectSchema } from 'yup'
 import omit from 'lodash/omit'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { InputVer2 } from 'src/components/InputVer2'
+import { useTranslation } from 'react-i18next'
 interface Props {
   queryConfig: QueryConfig
   categories: Category[]
@@ -22,6 +23,9 @@ type FormData = NoUndefinedField<Pick<Schema, 'price_max' | 'price_min'>>
 const priceSchema = schema.pick(['price_max', 'price_min'])
 
 export default function AsideFilter({ queryConfig, categories }: Props) {
+  //! nên truyền namespace vào hàm useTranslation để i18n biết đc đang dùng ns nào trong component này
+  //? nếu dùng 1 lúc nhiều ns thì phải truyền vào dạng mảng ['ns1', 'ns2']
+  const { t } = useTranslation('home')
   const { category } = queryConfig
   const {
     control,
@@ -80,7 +84,11 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
             </g>
           </g>
         </svg>
-        Tất cả danh mục
+        {/* 
+        //? Nếu dùng i18n thì phải dùng hàm t() để lấy ra text
+        //? nếu ns nested thì phải trỏ vào đúng key của ns đó exp: t('home:aside filter.all categories')
+        */}
+        {t('aside filter.all categories')}
       </Link>
       <div className='my-4 h-[1px] bg-gray-300' />
       <ul>
@@ -123,7 +131,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
             />
           </g>
         </svg>
-        Bộ lọc tìm kiếm
+        {t('aside filter.search filter')}
       </Link>
       <div className='my-4 h-[1px] bg-gray-300' />
       <div className='my-5'>
