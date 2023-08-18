@@ -54,7 +54,7 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
             })}
             onClick={() => handleSort(sortBy.view)}
           >
-            Phổ hiến
+            Phổ biến
           </button>
           <button
             className={classNames('h-8 bg-orange px-4 text-center text-sm capitalize hover:bg-orange/80', {
