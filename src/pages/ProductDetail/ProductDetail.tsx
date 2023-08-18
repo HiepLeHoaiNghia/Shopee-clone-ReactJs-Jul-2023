@@ -12,8 +12,10 @@ import purchaseApi from 'src/apis/purchase.api'
 import { purchasesStatus } from 'src/constants/purchase'
 import { toast } from 'react-toastify'
 import path from 'src/constants/path'
+import { useTranslation } from 'react-i18next'
 
 export default function ProductDetail() {
+  const { t } = useTranslation(['product'])
   const [buyCount, setBuyCount] = useState(1)
   const queryClient = useQueryClient()
   const { nameId } = useParams()
@@ -203,7 +205,9 @@ export default function ProductDetail() {
                   value={buyCount}
                   max={product.quantity}
                 />
-                <div className='ml-6 text-sm text-gray-500'>{product.quantity} Sản phẩm có sẵn</div>
+                <div className='ml-6 text-sm text-gray-500'>
+                  {product.quantity} {t('available products')}
+                </div>
               </div>
               <div className='mt-8 flex items-center'>
                 <button
@@ -233,7 +237,7 @@ export default function ProductDetail() {
                       <line fill='none' strokeLinecap='round' strokeMiterlimit={10} x1={9} x2={9} y1='8.5' y2='5.5' />
                     </g>
                   </svg>
-                  Thêm vào giỏ hàng
+                  {t('add to cart')}
                 </button>
                 <button
                   onClick={handleBuyNow}
