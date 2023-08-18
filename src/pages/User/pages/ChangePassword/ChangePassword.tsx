@@ -66,6 +66,7 @@ export default function ChangePassword() {
             <div className='truncate pt-3 capitalize sm:w-[20%] sm:text-left'>Mật khẩu cũ</div>
             <div className='w-[80%] sm:pl-5'>
               <Input
+                classNameEye='w-6 h-6 top-1.5'
                 classNameInput='w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm'
                 register={register}
                 name='password'
@@ -79,6 +80,7 @@ export default function ChangePassword() {
             <div className='truncate pt-3 capitalize sm:w-[20%] sm:text-left'>Mật khẩu mới</div>
             <div className='w-[80%] sm:pl-5'>
               <Input
+                classNameEye='w-6 h-6 top-1.5'
                 classNameInput='w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm'
                 register={register}
                 name='new_password'
@@ -92,6 +94,7 @@ export default function ChangePassword() {
             <div className='truncate pt-3 capitalize sm:w-[20%] sm:text-left'>Nhập laị mật khẩu mới</div>
             <div className='w-[80%] sm:pl-5'>
               <Input
+                classNameEye='w-6 h-6 top-1.5'
                 classNameInput='w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm'
                 register={register}
                 name='confirm_password'
