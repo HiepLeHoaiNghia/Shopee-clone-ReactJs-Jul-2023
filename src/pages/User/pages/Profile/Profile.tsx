@@ -150,7 +150,6 @@ export default function Profile() {
     setFile(file)
   }
 
-  if (!profile) return null
   return (
     <div className='rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20'>
       <div className='border-b border-b-gray-200 py-6'>
@@ -163,7 +162,7 @@ export default function Profile() {
             <div className='flex flex-col flex-wrap sm:flex-row'>
               <div className='truncate pt-3 capitalize sm:w-[20%] sm:text-right'>Email</div>
               <div className='sm:w-[80%] sm:pl-5'>
-                <div className='pt-3 text-gray-700'>{profile.email}</div>
+                <div className='pt-3 text-gray-700'>{profile?.email}</div>
               </div>
             </div>
             <Info />
@@ -209,7 +208,7 @@ export default function Profile() {
               <div className='my-5 h-24 w-24'>
                 <img
                   className='h-full w-full rounded-full object-cover'
-                  src={previewImage || getAvatarUrl(profile.avatar)}
+                  src={previewImage || getAvatarUrl(profile?.avatar)}
                   alt=''
                 />
               </div>
