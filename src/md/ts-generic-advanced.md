@@ -23,7 +23,12 @@ const result = identity<string>('Hello World')
 
 + Khi đó kiểu dữ liệu của generic sẽ là string.
 
-+ Khai báo type cho generic:
+```
+
+## <mark>**Khai báo type cho generic:**</mark>
+
+```ts
++
 
 type user = {
     name: string
@@ -52,8 +57,12 @@ const result = identity<user>({
 function identity<Type>(value: Type) {
   return value
 }
+```
 
-+ Ngoài ra ta còn có trick khi khai báo function:
+## <mark>**Trick khi khai báo function**</mark>
+
+```ts
++ Gán function cho 1 biến
 + Ví dụ:
 
 const myIdentity: <Type>(value: Type) => Type = identity
@@ -216,6 +225,86 @@ Argument of type '"address"' is not assignable to parameter of type '"name" | "a
 
 + Vì key address không thuộc 1 trong các key của obj.
 
++ Ví dụ khác:
++ Ta có type:
+```
+
+## <mark>**Generic sử dụng Record type**</mark>
+
+```ts
+
++ Ví dụ:
+
+type ValueWithMatchingKeys<T, K extends Record<keyof T, any>> = {
+  object: T;
+  keyObject: K;
+};
+
++ type ValueWithMatchingKeys là khai báo 1 type có tên là ValueWithMatchingKeys
++ <T, K extends Record<keyof T, any>> là generic sẽ truyền vào cho tham số của type ValueWithMatchingKeys
++ K extends Record<keyof T, any> generic K phải là một loại (bản ghi) có các key là các key của generic T và giá trị của các key là bất kỳ kiểu dữ liệu nào.
++ Record<keyof T, any> là một loại (bản ghi) có các key là các key của generic T và giá trị của các key là bất kỳ kiểu dữ liệu nào.
++ {object: T; keyObject: K;} là kiểu dữ liệu return của type ValueWithMatchingKeys
+```
+
+## <mark>**Generic sử dụng các phương thức**</mark>
+
+```ts
++ Ngoài sử dụng type Record  để khai báo generic, còn có thể sử dụng mapped type để khai báo generic:
+
+type ValueWithMatchingKeys<T, K extends { [P in keyof T]: any }> = {
+  object: T;
+  keyObject: K;
+};
+
++ type ValueWithMatchingKeys là khai báo 1 type có tên là ValueWithMatchingKeys
++ T đại diện cho loại đối tượng có key và cấu trúc mà K phải khớp.
++ K đại diện cho loại đối tượng khác có các key cần khớp với các key của T và các giá trị có thể thuộc bất kỳ loại nào.
++ { [P in keyof T]: any } là phương thức map lặp qua tất cả các key của T và trả về một loại đối tượng mới với các key tương tự như T và : any là các giá trị có thể thuộc bất kỳ loại nào.
+
++ Cách sử dụng type ValueWithMatchingKeys:
+
++ Ví dụ:
+
+const person = {
+  name: 'John',
+  age: 20,
+}
+
+const keys = {
+  name: true,
+  age: false,
+}
+
+const result: ValueWithMatchingKeys<typeof person, typeof keys> = {
+  object: person,
+  keyObject: keys,
+}
+
++ const person là khai báo 1 biến có tên là person có kiểu dữ liệu là typeof person
++ const keys là khai báo 1 biến có tên là keys có kiểu dữ liệu là typeof keys
++ const result là khai báo 1 biến có tên là result có kiểu dữ liệu phải tuân thủ theo ValueWithMatchingKeys<typeof person, typeof keys>
++ typeof person là kiểu dữ liệu của biến person
++ typeof keys là kiểu dữ liệu của biến keys
+
++ Ví dụ :
+
+const getValueWithMatchingKeys = <T, K extends Record<keyof T, any>>(
+  obj: T,
+  keyObject: K
+): ValueWithMatchingKeys<T, K> => {
+  const result: ValueWithMatchingKeys<T, K> = {
+    object: obj,
+    keyObject: keyObject
+  }
+  return result
+}
+
++ const getValueWithMatchingKeys là khai báo 1 function có tên là getValueWithMatchingKeys
++ <T, K extends Record<keyof T, any>> là generic sẽ truyền vào cho tham số của function getValueWithMatchingKeys
++(obj: T, keyObject: K) là tham số truyền vào cho function getValueWithMatchingKeys có kiểu dữ liệu là T và K
++ : ValueWithMatchingKeys<T, K> là kiểu dữ liệu return của function getValueWithMatchingKeys
++ const result: ValueWithMatchingKeys<T, K> là khai báo 1 biến có tên là result có kiểu dữ liệu phải tuân thủ theo ValueWithMatchingKeys<T, K>
 ```
 
 ## <mark>**Generic mặc định**</mark>
