@@ -10,6 +10,8 @@ import { ErrorResponse } from 'src/types/utils.type'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import Button from 'src/components/Button'
+import { Helmet } from 'react-helmet-async'
+
 // type of formData without using yup to make Schema
 // import { FormData } from 'src/types/FormData'
 
@@ -54,6 +56,10 @@ export default function Login() {
 
   return (
     <div className='bg-orange'>
+      <Helmet>
+        <title>Đăng nhập | Shopee clone</title>
+        <meta name='description' content='Đăng nhập vào dự án Shopee clone' />
+      </Helmet>
       <div className='container'>
         <div className='log:grid-cols-5 grid grid-cols-1 py-12 lg:py-32 lg:pr-10'>
           <div className='lg:col-span-2 lg:col-start-4'>
@@ -94,6 +100,7 @@ export default function Login() {
             </form>
           </div>
         </div>
+        h
       </div>
     </div>
   )
