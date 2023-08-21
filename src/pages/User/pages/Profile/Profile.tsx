@@ -15,6 +15,7 @@ import { setProfileToLS } from 'src/utils/auth'
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import InputFile from 'src/components/InputFile'
+import { Helmet } from 'react-helmet-async'
 
 type FormData = Pick<UserSchema, 'name' | 'address' | 'phone' | 'date_of_birth' | 'avatar'>
 type FormDataError = Omit<FormData, 'date_of_birth'> & { date_of_birth?: string }
@@ -30,6 +31,10 @@ function Info() {
   return (
     <>
       <div className='mt-6 flex flex-col flex-wrap sm:flex-row'>
+        <Helmet>
+          <title>Thông tin user | Shopee clone</title>
+          <meta name='description' content='Trang quản lý thông tin user' />
+        </Helmet>
         <div className='truncate pt-3 capitalize sm:w-[20%] sm:text-right'>Tên</div>
         <div className='w-[80%] sm:pl-5'>
           <Input
