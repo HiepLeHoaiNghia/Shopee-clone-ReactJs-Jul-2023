@@ -28,6 +28,7 @@ describe('isAxiosUnprocessableEntityError', () => {
         } as any)
       )
     ).toBe(false)
+
     expect(
       isAxiosUnprocessableEntityError(
         new AxiosError(undefined, undefined, undefined, undefined, {
@@ -36,6 +37,7 @@ describe('isAxiosUnprocessableEntityError', () => {
         } as any)
       )
     ).toBe(false)
+
     expect(
       isAxiosUnprocessableEntityError(
         new AxiosError(undefined, undefined, undefined, undefined, {
