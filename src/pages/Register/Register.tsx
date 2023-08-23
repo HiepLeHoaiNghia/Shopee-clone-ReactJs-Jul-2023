@@ -68,7 +68,7 @@ export default function Register() {
   return (
     <div className='bg-orange'>
       <Helmet>
-        <title>Đăng ký| Shopee clone</title>
+        <title>Đăng ký | Shopee clone</title>
         <meta name='description' content='Đăng ký tài khoản Shopee clone' />
       </Helmet>
       <div className='container'>
