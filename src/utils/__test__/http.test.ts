@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { Http } from '../http'
 import { AxiosInstance, HttpStatusCode } from 'axios'
 import { setAccessTokenToLS, setRefreshTokenToLS } from '../auth'
+import { access_token_1s, refresh_token_1000d } from 'src/msw/auth.msw'
 
 describe('http axios', () => {
   //? Tạo một instance mới cho mỗi test
@@ -11,12 +12,6 @@ describe('http axios', () => {
     localStorage.clear()
     http = new Http().instance as AxiosInstance
   })
-
-  const access_token_1s =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWUyNjdkMWFmYzJlMWExZjk2YjRjOSIsImVtYWlsIjoiQUF1c2VyMkBnbWFpbC5jb20iLCJyb2xlcyI6WyJVc2VyIl0sImNyZWF0ZWRfYXQiOiIyMDIzLTA4LTIyVDEwOjM1OjQ5LjEzOFoiLCJpYXQiOjE2OTI3MDA1NDksImV4cCI6MTY5MjcwMDU1MH0.V4PbVwHSW-GcWBiJXh8ya61VOsT-vrhDpcdgUZMK2MQ'
-
-  const refresh_token_1000d =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWUyNjdkMWFmYzJlMWExZjk2YjRjOSIsImVtYWlsIjoiQUF1c2VyMkBnbWFpbC5jb20iLCJyb2xlcyI6WyJVc2VyIl0sImNyZWF0ZWRfYXQiOiIyMDIzLTA4LTIyVDEwOjM5OjM2LjM4OFoiLCJpYXQiOjE2OTI3MDA3NzYsImV4cCI6MTc3NzMwMDc3Nn0.fagWwh7Npc91l2WUlUB4Vcvya_raoyOABaZNS1CAbb0'
 
   it('call API', async () => {
     //* Không nên đụng đến thư mục apis

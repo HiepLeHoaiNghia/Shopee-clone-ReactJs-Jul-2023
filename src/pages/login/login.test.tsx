@@ -59,5 +59,10 @@ describe('login', () => {
       expect(screen.queryByText(/Email không đúng định dạng/i)).toBeNull()
       expect(screen.queryByText(/Độ dài từ 6 - 160 ký tự/i)).toBeFalsy()
     })
+    fireEvent.submit(submitBtn)
+    await logScreen()
+    await waitFor(() => {
+      expect(document.querySelector('title')?.textContent).toBe('Trang chủ | Shopee clone')
+    })
   })
 })
