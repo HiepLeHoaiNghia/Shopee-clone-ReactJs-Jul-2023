@@ -7,6 +7,7 @@ export default {
   corePlugins: {
     container: false
   },
+  darkMode: ['class', '[data-mode="dark"]'],
   theme: {
     extend: {
       colors: {
