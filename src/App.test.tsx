@@ -1,10 +1,7 @@
 import { describe, test, expect } from 'vitest'
 import { screen, waitFor } from '@testing-library/react'
-import matchers from '@testing-library/jest-dom/matchers'
 import { logScreen, renderWithRouter } from './utils/testUtils'
 import path from './constants/path'
-
-expect.extend(matchers)
 
 describe('App', () => {
   test('App render và chuyển trang', async () => {

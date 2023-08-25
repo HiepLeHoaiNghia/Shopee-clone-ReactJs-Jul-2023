@@ -1,9 +1,7 @@
-import matchers from '@testing-library/jest-dom/matchers'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import path from 'src/constants/path'
 import { logScreen, renderWithRouter } from 'src/utils/testUtils'
 import { beforeAll, describe, expect, test } from 'vitest'
-expect.extend(matchers)
 
 describe('login', () => {
   let submitBtn: HTMLButtonElement
