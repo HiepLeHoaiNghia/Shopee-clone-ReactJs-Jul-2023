@@ -1,162 +1,188 @@
-## <mark>**Generic type nâng cao**</mark>
+## **Generic type nâng cao**
+
+- Để quy định kiểu dữ liệu cho các thuộc tính của một đối tượng, ta sử dụng <mark>generic</mark> như sau:
+
+- <mark>Generic</mark> với <mark>arrow function</mark>:
 
 ```ts
-
-+ Để quy định kiểu dữ liệu cho các thuộc tính của một đối tượng, ta sử dụng generic như sau:
-
-+ Generic với arrow function:
-
-const identity = <Type>(value: Type) = value
-
-+ Ở đây ta có function identity có 1 tham số là value, kiểu dữ liệu của value là Type, <Type> là generic.
-+ Việc truyền kiểu dữ liệu cho generic sẽ do ta quy định khi gọi function identity.
-
-+ Ví dụ:
-
-const result = identity('Hello World')
-
-+ Khi không quy định kiểu dữ liêu nào cho generic, thì kiểu dữ liệu của generic sẽ là kiểu dữ liệu của tham số truyền vào.Ở đây kiểu dữ liệu sẽ là hello world.
-
-+ Nếu muốn quy định kiểu dữ liệu cho generic, ta sử dụng cú pháp sau:
-
-const result = identity<string>('Hello World')
-
-+ Khi đó kiểu dữ liệu của generic sẽ là string.
-
+const identity = <Type>(value: Type) => value
 ```
 
-## <mark>**Khai báo type cho generic:**</mark>
+- Ở đây ta có <mark>arrow function identity</mark> có 1 tham số là <mark>value</mark>, kiểu dữ liệu của <mark>value</mark> là <mark>Type</mark>, Type là tên biến đặt cho <mark>generic</mark>.
+- Việc truyền kiểu dữ liệu cho <mark>generic</mark> sẽ do ta quy định khi gọi <mark>function identity</mark>.
+
+- Ví dụ:
 
 ```ts
-+
+const result = identity('Hello World')
+```
 
+- Khi không quy định kiểu dữ liêu nào cho <mark>generic</mark>, thì kiểu dữ liệu của <mark>generic</mark> sẽ là kiểu dữ liệu của tham số truyền vào.Ở đây kiểu dữ liệu sẽ là <mark>hello world</mark>.
+
+- Nếu muốn quy định kiểu dữ liệu cho <mark>generic</mark>, ta sử dụng cú pháp sau:
+
+```ts
+const result = identity<string>('Hello World')
+```
+
+- Khi đó kiểu dữ liệu của <mark>generic</mark> sẽ là <mark>string</mark>.
+
+## **Khai báo type cho generic**
+
+```ts
 type user = {
-    name: string
-    age: number
+  name: string
+  age: number
 }
 
 const result = identity<user>({
   name: 'John',
   age: 20
 })
+```
 
-+ Khi đó kiểu dữ liệu của generic sẽ là User.
-+ User là 1 object có 2 thuộc tính là name và age, name có kiểu dữ liệu là string, age có kiểu dữ liệu là number.
+- Khi đó kiểu dữ liệu của <mark>generic</mark> sẽ là <mark>User</mark>.
+- <mark>User</mark> là 1 <mark>object</mark> có 2 thuộc tính là <mark>name</mark> và <mark>age</mark>, <mark>name</mark> có kiểu dữ liệu là <mark>string</mark>, <mark>age</mark> có kiểu dữ liệu là <mark>number</mark>.
 
-+ Nếu như ta thêm 1 thuộc tính khác vào User mà không khai báo trước :
+- Nếu như ta thêm 1 thuộc tính khác vào <mark>User</mark> mà không khai báo trước :
+
+```ts
 const result = identity<user>({
   name: 'John',
   age: 20,
   address: 'New York'
 })
+```
 
-+ Khi đó sẽ báo lỗi vì User không có thuộc tính address.
+- Khi đó sẽ báo lỗi vì <mark>User</mark> không có thuộc tính <mark>address</mark>.
 
-+ Generic với function bình thường:
+- <mark>Generic</mark> với <mark>function bình thường</mark>:
 
-function identity<Type>(value: Type) {
+```ts
+function identity<Type>(value: Type): Type {
   return value
 }
 ```
 
-## <mark>**Trick khi khai báo function**</mark>
+## **Trick khi khai báo function**
+
+- Gán <mark>function</mark> cho 1 <mark>biến</mark>
+- Ví dụ:
 
 ```ts
-+ Gán function cho 1 biến
-+ Ví dụ:
-
 const myIdentity: <Type>(value: Type) => Type = identity
+```
 
-+ Ở đây ta có function myIdentity là 1 function có 1 tham số là value, kiểu dữ liệu của value là Type, <Type> là generic, và trả về kiểu dữ liệu là Type.
-+ Sau đó ta gán function myIdentity bằng function identity.
-+ Khi đó kiểu dữ liệu của myIdentity cũng sẽ là Type như function identity.
+- Ở đây ta có <mark>function myIdentity</mark> là 1 <mark>function</mark> có 1 tham số là <mark>value</mark>, kiểu dữ liệu của <mark>value</mark> là <mark>Type</mark>, <mark>Type</mark> là <mark>generic</mark>, và trả về kiểu dữ liệu là <mark>Type</mark>.
 
-+ const myIdentity là khai báo 1 function có tên là myIdentity
-+ <Type> là generic
-+ (value: Type) là tham số của function myIdentity lấy từ generic
-+ => Type là kiểu dữ liệu return của function myIdentity
-+ identity là function myIdentity gán bằng
+- Sau đó ta gán <mark>function myIdentity</mark> bằng với <mark>function identity</mark>.
 
-+ Ngoải ra ta còn có thể sử dụng 1 object để khải báo function:
-+ Ví dụ:
+- Khi đó kiểu dữ liệu tham số tuyền vào và kết quả return của <mark>identity</mark> cũng sẽ là <mark>Type</mark> như <mark>function myIdentity</mark>.
 
-const myIdentity: {<Type>(value: Type): Type} = identity
+- const <mark>myIdentity</mark> là khai báo 1 <mark>function</mark> có tên là <mark>myIdentity</mark>
 
-+ const myIdentity là khai báo 1 function có tên là myIdentity
-+ {<Type>(value: Type) là generic và tham số của function myIdentity lấy từ generic
-+ : Type} là kiểu dữ liệu return của function myIdentity
+- <mark>Type</mark> là <mark>generic</mark>
 
-+ Ngoài ra còn có thể khai báo type cho generic:
+- <mark>(value: Type)</mark> là tham số của <mark>function myIdentity</mark> lấy từ <mark>generic</mark>
 
-type Identity = {<Type>(value: Type): Type}
+- <mark> => Type</mark> là kiểu dữ liệu return của <mark>function myIdentity</mark>
 
-+ Hoăc interface:
+- Ngoải ra ta còn có thể sử dụng 1 <mark>object</mark> để khải báo kiểu dữ liệu của <mark>function</mark>:
 
+- Ví dụ:
+
+```ts
+const myIdentity: { <Type>(value: Type): Type } = identity
+```
+
+- <mark>const myIdentity</mark> là khai báo 1 <mark>function</mark> có tên là <mark>myIdentity</mark>
+- <mark>{< Type >(value: Type)</mark> là <mark>generic</mark> và tham số của <mark>function myIdentity</mark>
+- <mark>: Type}</mark> là kiểu dữ liệu return của <mark>function myIdentity</mark>
+
+- Ngoài ra còn có thể khai báo <mark>type</mark> cho <mark>generic</mark>:
+
+```ts
+type Identity = { <Type>(value: Type): Type }
+```
+
+- Hoăc <mark>interface</mark>:
+
+```ts
 interface Identity {
   <Type>(value: Type): Type
 }
-
-+ Và gán nó vào function:
-
-const myIdentity: Identity = identity
-
-+ Khi đó kiểu dữ liệu của myIdentity sẽ là Identity.
-
-+ Trường họp ta muốn quy định kiểu dữ liệu cho generic đã khai báo bằng type hoặc interface thì ta sử dụng cú pháp sau:
-
-interface Identity<Type> {
- (value: Type): Type
-}
-
-+ Bằng viết thêm Generic sau tên type hoặc interface và trước tham số của function.
-+ Lúc này kiểu dữ liệu truyền vào cho generic <Type> sẽ là kiểu dữ liệu của tham số truyền vào của function.
-
-+ interface Identity là khai báo 1 function có tên là Identity
-+ <Type> là generic sẽ đc truyền vào cho tham số và kiểu dữ liệu return của function Identity
-+ (value: Type) là tham số của function Identity lấy từ generic
-+ : Type là kiểu dữ liệu return của function Identity
-
-+ ta có thể linh động thay đổi kiểu dữ liệu của generic khi gọi function:
-
-const myIdentity: Identity<string> = identity
-
-+ Khi đó kiểu dữ liệu của myIdentity sẽ là Identity<string>.
-+ Khi dùng function myIdentity thì kiểu dữ liệu của tham số truyền vào sẽ phải là string.
-
-+ Ví dụ:
-
-myIdentity("hello")
-
 ```
 
-## <mark>**Ràng buộc Generic**</mark>
+- Và gán nó vào <mark>biến</mark>:
 
 ```ts
+const myIdentity: Identity = identity
+```
+
+- Khi đó kiểu dữ liệu của <mark>myIdentity</mark> sẽ là <mark>Identity</mark>.
+
+- Trường họp ta muốn quy định kiểu dữ liệu cho <mark>generic</mark> đã khai báo bằng <mark>type</mark> hoặc <mark>interface</mark> thì ta sử dụng cú pháp sau:
+
+```ts
+interface Identity<Type> {
+  (value: Type): Type
+}
+```
+
+- Bằng viết thêm <mark>Generic</mark> sau tên <mark>type</mark> hoặc <mark>interface</mark> và trước tham số của <mark>function</mark>.
+- Lúc này kiểu dữ liệu truyền vào cho <mark>generic</mark> <mark>Type</mark> sẽ là kiểu dữ liệu của tham số truyền vào của <mark>function</mark>.
+
+- <mark>interface Identity</mark> là khai báo 1 <mark>function</mark> có tên là <mark>Identity</mark>
+- <mark>Type</mark> là <mark>generic</mark> sẽ đc truyền vào cho tham số và kiểu dữ liệu return của <mark>function Identity</mark>
+- <mark>(value: Type)</mark>là tham số của <mark>function Identity</mark> lấy từ <mark>generic</mark>
+- <mark>: Type</mark> là kiểu dữ liệu return của <mark>function Identity</mark>
+
+- ta có thể linh động thay đổi kiểu dữ liệu của <mark>generic</mark> khi gọi <mark>function</mark>:
+
+```ts
+const myIdentity: Identity<string> = identity
+```
+
+- Khi đó kiểu dữ liệu của <mark>myIdentity</mark> sẽ là <mark>Identity với generic là < string></mark>.
+- Khi dùng <mark>function myIdentity</mark> thì kiểu dữ liệu của tham số truyền vào sẽ phải là <mark>string</mark>.
+
+- Ví dụ:
+
+```ts
+myIdentity('hello')
+```
+
+## **Ràng buộc Generic**
 
 Nếu ta có:
 
+```ts
 const logIdentity = <Type>(value: Type): Type => {
   console.log(value.length)
   return value
 }
+```
 
-+ Ở đây sẽ có lỗi vì kiểu dữ liệu của Type không có thuộc tính length.
+- Ở đây sẽ có lỗi vì kiểu dữ liệu của <mark>Type</mark> không có thuộc tính <mark>length</mark>.
 
-+ Để giải quyết vấn đề này ta sử dụng ràng buộc generic:
+- Để giải quyết vấn đề này ta sử dụng <mark>ràng buộc generic</mark>:
 
-const logIdentity = <Type extends {length: number}>(value: Type): Type => {
+```ts
+const logIdentity = <Type extends { length: number }>(value: Type): Type => {
   console.log(value.length)
   return value
 }
+```
 
-+ const logIdentity là khai báo 1 function có tên là logIdentity
-+ <Type extends {length: number}> là generic sẽ truyền vào cho tham số và kiểu dữ liệu return của function logIdentity
-+ generic Type sẽ phải có thuộc tính length và kiểu dữ liệu của thuộc tính length phải là number
-+ (value: Type) là tham số của function logIdentity lấy từ generic
-+ : Type là kiểu dữ liệu return của function logIdentity
+- const <mark>logIdentity</mark> là khai báo 1 <mark>function</mark> có tên là <mark>logIdentity</mark>
+- <mark><Type extends {length: number}></mark> là <mark>generic</mark> sẽ truyền vào cho tham số và kiểu dữ liệu return của <mark>function logIdentity</mark>
+- <mark>generic Type</mark> sẽ phải có thuộc tính <mark>length</mark> và kiểu dữ liệu của thuộc tính <mark>length</mark> phải là <mark>number</mark>
+- <mark>(value: Type)</mark> là tham số của <mark>function logIdentity</mark> lấy từ <mark>generic</mark>
+- <mark>: Type</mark> là kiểu dữ liệu return của <mark>function logIdentity</mark>
 
-+ Ta có thể khai báo interface cho generic:
+- Ta có thể khai báo <mark>interface</mark> cho <mark>generic</mark>:
 
+```ts
 interface LengthObj {
   length: number
 }
@@ -165,130 +191,147 @@ const logIdentity = <Type extends LengthObj>(value: Type): Type => {
   console.log(value.length)
   return value
 }
+```
 
-+ <Type extends LengthObj> generic Type ở đây sẽ phải có thuộc tính length và kiểu dữ liệu của thuộc tính length phải là number
+- <mark>< Type extends LengthObj></mark> <mark>generic Type</mark> ở đây sẽ phải có thuộc tính <mark>length</mark> và kiểu dữ liệu của thuộc tính <mark>length</mark> phải là <mark>number</mark>
 
-+ Ta còn có thể truyền nhiều generic vào cho function:
+- Ta còn có thể truyền <mark>nhiều generic</mark> vào cho <mark>function</mark>:
 
-+ Ví dụ:
+- Ví dụ:
 
+```ts
 const getValue = <Obj, Key>(obj: Obj, key: Key) => {
   console.log(obj)
   console.log(key)
 }
+```
 
-+ const getValue là khai báo 1 function có tên là getValue
-+ <Obj, Key> là generic sẽ truyền vào cho tham số của function getValue
-+ (obj: Obj, key: Key) là tham số của function getValue lấy từ generic, obj có kiểu dữ liệu nhận từ generic Obj, key có kiểu dữ liệu nhận từ generic Key
+- <mark>const getValue</mark> là khai báo 1 <mark>function</mark> có tên là <mark>getValue</mark>
+- <mark><Obj, Key></mark> là <mark>generic</mark> sẽ truyền vào cho tham số của <mark>function getValue</mark>
 
-+ Khi gọi function getValue ta sẽ truyền 2 tham số vào cho function:
+- <mark>(obj: Obj, key: Key)</mark> là tham số của <mark>function getValue</mark> lấy từ <mark>generic</mark>, <mark>obj</mark> có kiểu dữ liệu nhận từ <mark>generic Obj</mark>, <mark>key</mark> có kiểu dữ liệu nhận từ <mark>generic Key</mark>
 
-getValue<{name:string}, string>({name: 'John'}, 'name')
+- Khi gọi <mark>function getValue</mark> ta sẽ truyền 2 tham số vào cho <mark>function</mark>:
 
-+ getValue gọi function getValue
-+ <{name:string}, string> quy định kiểu cho generic Obj và Key
-+ ({name: 'John'}, 'name') truyền tham số cho function getValue
+```ts
+getValue<{ name: string }, string>({ name: 'John' }, 'name')
+```
 
-+ Trường hợp khác:
-+ Ví dụ:
-+ Chũng ta muốn return ra giá trị của key trong obj:
+- <mark>getValue</mark> gọi function getValue
+- <mark><{name:string}, string></mark> quy định kiểu cho generic Obj và Key
+- <mark>({name: 'John'}, 'name')</mark> truyền tham số cho <mark>function getValue</mark>
 
+- Trường hợp khác:
+- Ví dụ:
+- Chũng ta muốn return ra giá trị của <mark>key</mark> trong <mark>obj</mark>:
+
+```ts
 const getValue = <Obj, Key>(obj: Obj, key: Key) => {
   console.log(obj[key])
 }
+```
 
-+ Nếu chỉ viết như trên sẽ gặp lỗi:
-Type 'Key' cannot be used to index type 'Obj'.
+- Nếu chỉ viết như trên sẽ gặp lỗi:
 
-+ Để giải quyết vấn đề này ta sử dụng ràng buộc generic:
+```ts
+  Type 'Key' cannot be used to index type 'Obj'.
+```
 
+- Để giải quyết vấn đề này ta sử dụng <mark>ràng buộc generic</mark>:
+
+```ts
 const getValue = <Obj, Key extends keyof Obj>(obj: Obj, key: Key) => {
   console.log(obj[key])
 }
+```
 
-+ <Obj, Key extends keyof Obj> generic Key sẽ phải là 1 trong các key của generic Obj.
+- <mark><Obj, Key extends keyof Obj></mark> <mark>generic Key</mark> sẽ phải là 1 trong các <mark>key</mark> của <mark>generic Obj</mark>.
 
-+ Ví dụ khi sử dụng function getValue:
+- Ví dụ khi sử dụng <mark>function getValue</mark>:
 
+```ts
 getValue(
   {
-    name: 'John', age: 20
+    name: 'John',
+    age: 20
   },
   'name'
 )
+```
 
-+ Lúc này key sẽ phải là 1 trong các key của obj.
-+ Cụ thể ở đây key buộc phải là name hoặc age
-+ nêu ta chuyền key là address thì sẽ gặp lỗi:
+- Lúc này <mark>key</mark> sẽ phải là 1 trong các <mark>key</mark> của <mark>obj</mark>.
+- Cụ thể ở đây <mark>key</mark> buộc phải là <mark>name</mark> hoặc <mark>age</mark>
+- nêu ta truyển thêm <mark>key</mark> là <mark>address</mark> thì sẽ gặp lỗi:
 
+```ts
 Argument of type '"address"' is not assignable to parameter of type '"name" | "age"'.
-
-+ Vì key address không thuộc 1 trong các key của obj.
-
-+ Ví dụ khác:
-+ Ta có type:
 ```
 
-## <mark>**Generic sử dụng Record type**</mark>
+- Vì <mark>key address</mark> không thuộc 1 trong các <mark>key</mark> của <mark>obj</mark>.
+
+## **Generic sử dụng Record type**
+
+- Ví dụ khác:
 
 ```ts
-
-+ Ví dụ:
-
 type ValueWithMatchingKeys<T, K extends Record<keyof T, any>> = {
-  object: T;
-  keyObject: K;
-};
-
-+ type ValueWithMatchingKeys là khai báo 1 type có tên là ValueWithMatchingKeys
-+ <T, K extends Record<keyof T, any>> là generic sẽ truyền vào cho tham số của type ValueWithMatchingKeys
-+ K extends Record<keyof T, any> generic K phải là một loại (bản ghi) có các key là các key của generic T và giá trị của các key là bất kỳ kiểu dữ liệu nào.
-+ Record<keyof T, any> là một loại (bản ghi) có các key là các key của generic T và giá trị của các key là bất kỳ kiểu dữ liệu nào.
-+ {object: T; keyObject: K;} là kiểu dữ liệu return của type ValueWithMatchingKeys
+  object: T
+  keyObject: K
+}
 ```
 
-## <mark>**Generic sử dụng các phương thức**</mark>
+- <mark>type ValueWithMatchingKeys</mark> là khai báo 1 <mark>type</mark> có tên là <mark>ValueWithMatchingKeys</mark>
+- <mark><T, K extends Record<keyof T, any>></mark> là <mark>generic</mark> sẽ truyền vào cho tham số của <mark>type</mark> <mark>ValueWithMatchingKeys</mark>
+- <mark>K extends Record<keyof T, any></mark> <mark>generic K</mark> phải là <mark>một loại (bản ghi)</mark> có các <mark>key</mark> là các <mark>key</mark> của <mark>generic T</mark> và <mark>value</mark> của các <mark>key</mark> là <mark>any</mark>.
+- <mark>Record<keyof T, any></mark> là <mark>một loại (bản ghi)</mark> có các <mark>key</mark> là <mark>keyof T</mark> và <mark>value</mark> là <mark>any</mark>
+- <mark>{object: T; keyObject: K}</mark> là kiểu dữ liệu return của <mark>type ValueWithMatchingKeys</mark>
+
+## **Generic sử dụng các phương thức**
+
+- Ngoài sử dụng <mark>type Record</mark> để khai báo <mark>generic</mark>, còn có thể sử dụng <mark>mapped type</mark> để khai báo:
 
 ```ts
-+ Ngoài sử dụng type Record  để khai báo generic, còn có thể sử dụng mapped type để khai báo generic:
-
 type ValueWithMatchingKeys<T, K extends { [P in keyof T]: any }> = {
-  object: T;
-  keyObject: K;
-};
+  object: T
+  keyObject: K
+}
+```
 
-+ type ValueWithMatchingKeys là khai báo 1 type có tên là ValueWithMatchingKeys
-+ T đại diện cho loại đối tượng có key và cấu trúc mà K phải khớp.
-+ K đại diện cho loại đối tượng khác có các key cần khớp với các key của T và các giá trị có thể thuộc bất kỳ loại nào.
-+ { [P in keyof T]: any } là phương thức map lặp qua tất cả các key của T và trả về một loại đối tượng mới với các key tương tự như T và : any là các giá trị có thể thuộc bất kỳ loại nào.
+- <mark>type ValueWithMatchingKeys</mark> là khai báo 1 <mark>type</mark> có tên là <mark>ValueWithMatchingKeys</mark>
+- <mark>T</mark> đại diện cho <mark>loại đối tượng</mark> có <mark>key</mark> và cấu trúc mà <mark>K</mark> phải tuân theo.
+- <mark>K</mark> đại diện cho <mark>loại đối tượng khác</mark> có các <mark>key</mark> cần khớp với các <mark>key</mark> của <mark>T</mark> và <mark>các value</mark> có thể thuộc bất kỳ loại nào.
+- <mark>{ [P in keyof T]: any }</mark> là phương thức <mark>map</mark> lặp qua tất cả các <mark>key</mark> của <mark>T</mark> và trả về một loại đối tượng mới với các key tương tự như T và <mark>: any</mark> là <mark>các value</mark> có thể thuộc bất kỳ loại nào.
 
-+ Cách sử dụng type ValueWithMatchingKeys:
+- Cách sử dụng <mark>type ValueWithMatchingKeys</mark>:
 
-+ Ví dụ:
+- Ví dụ:
 
+```ts
 const person = {
   name: 'John',
-  age: 20,
+  age: 20
 }
 
 const keys = {
   name: true,
-  age: false,
+  age: false
 }
 
 const result: ValueWithMatchingKeys<typeof person, typeof keys> = {
   object: person,
-  keyObject: keys,
+  keyObject: keys
 }
+```
 
-+ const person là khai báo 1 biến có tên là person có kiểu dữ liệu là typeof person
-+ const keys là khai báo 1 biến có tên là keys có kiểu dữ liệu là typeof keys
-+ const result là khai báo 1 biến có tên là result có kiểu dữ liệu phải tuân thủ theo ValueWithMatchingKeys<typeof person, typeof keys>
-+ typeof person là kiểu dữ liệu của biến person
-+ typeof keys là kiểu dữ liệu của biến keys
+- <mark>const person</mark> là khai báo 1 <mark>biến</mark> có tên là <mark>person</mark> có kiểu dữ liệu là <mark>typeof person</mark>
+- <mark>const keys</mark> là khai báo 1 <mark>biến</mark> có tên là <mark>keys</mark> có kiểu dữ liệu là <mark>typeof keys</mark>
+- <mark>const result</mark> là khai báo 1 biến có tên là <mark>result</mark> có kiểu dữ liệu phải tuân thủ theo <mark>ValueWithMatchingKeys<typeof person, typeof keys></mark>
+- <mark>typeof person</mark> là kiểu dữ liệu của biến <mark>person</mark>
+- <mark>typeof keys</mark> là kiểu dữ liệu của biến <mark>keys</mark>
 
-+ Ví dụ :
+- Ví dụ :
 
+```ts
 const getValueWithMatchingKeys = <T, K extends Record<keyof T, any>>(
   obj: T,
   keyObject: K
@@ -299,49 +342,60 @@ const getValueWithMatchingKeys = <T, K extends Record<keyof T, any>>(
   }
   return result
 }
-
-+ const getValueWithMatchingKeys là khai báo 1 function có tên là getValueWithMatchingKeys
-+ <T, K extends Record<keyof T, any>> là generic sẽ truyền vào cho tham số của function getValueWithMatchingKeys
-+(obj: T, keyObject: K) là tham số truyền vào cho function getValueWithMatchingKeys có kiểu dữ liệu là T và K
-+ : ValueWithMatchingKeys<T, K> là kiểu dữ liệu return của function getValueWithMatchingKeys
-+ const result: ValueWithMatchingKeys<T, K> là khai báo 1 biến có tên là result có kiểu dữ liệu phải tuân thủ theo ValueWithMatchingKeys<T, K>
 ```
 
-## <mark>**Generic mặc định**</mark>
+- <mark>const getValueWithMatchingKeys</mark> là khai báo 1 <mark>function</mark> có tên là <mark>getValueWithMatchingKeys</mark>
+- <mark><T, K extends Record<keyof T, any>></mark> là <mark>generic</mark> sẽ truyền vào cho tham số của <mark>function getValueWithMatchingKeys</mark>
+- <mark>(obj: T, keyObject: K)</mark> là tham số truyền vào cho <mark>function getValueWithMatchingKeys</mark> có kiểu dữ liệu là <mark>T</mark> và <mark>K</mark>
+- <mark>: ValueWithMatchingKeys<T, K></mark> là kiểu dữ liệu return của <mark>function getValueWithMatchingKeys</mark>
+- <mark>const result: ValueWithMatchingKeys<T, K></mark> là khai báo 1 <mark>biến</mark> có tên là <mark>result</mark> có kiểu dữ liệu phải tuân thủ theo <mark>ValueWithMatchingKeys<T, K></mark>
+
+## **Generic mặc định**
+
+- Ví dụ ta có 1 <mark>interface</mark> như sau:
 
 ```ts
-+ Ví dụ ta có 1 interface như sau:
-
 interface Box<Type> {
   value: Type
 }
+```
 
-+ Ví dụ khi ta khai báo 1 biến có kiểu dữ liệu là Box:
-const box : Box = {
+- Ví dụ khi ta khai báo 1 <mark>biến</mark> có kiểu dữ liệu là <mark>Box</mark>:
+
+```ts
+const box: Box = {
   value: 'hello'
 }
+```
 
-+ Lúc này sẽ gặp lỗi:
-Generic type 'Box' requires 1 type argument(s).
+- Lúc này sẽ gặp lỗi:
 
-+ Để giải quyết vấn đề này ta phải khai báo kiểu cho generic Type, cụ thể ở đây là string:
+```ts
+  Generic type 'Box' requires 1 type argument(s).
+```
 
-const box : Box<string> = {
+- Để giải quyết vấn đề này ta phải khai báo kiểu cho <mark>generic Type</mark>, cụ thể ở đây là <mark>string</mark>:
+
+```ts
+const box: Box<string> = {
   value: 'hello'
 }
+```
 
-+ Để tránh việc phải khai báo kiểu cho generic Type ta có thể khai báo generic mặc định cho interface Box:
+- Để tránh việc phải khai báo kiểu cho <mark>generic Type</mark> ta có thể khai báo <mark>generic mặc định</mark> cho <mark>interface Box</mark>:
 
+```ts
 interface Box<Type = string> {
   value: Type
 }
+```
 
-+ Lúc này generic Type sẽ có kiểu dữ liệu mặc định là string.
+- Lúc này <mark>generic Type</mark> sẽ có kiểu dữ liệu mặc định là <mark>string</mark>.
 
-+ Muốn khai báo kiểu dữ liệu khác cho generic Type ta phải khai báo khi khai báo biến:
+- Muốn khai báo kiểu dữ liệu khác cho <mark>generic Type</mark> ta phải khai báo khi khai báo <mark>biến</mark>:
 
-const box : Box<number> = {
+```ts
+const box: Box<number> = {
   value: 10
 }
-
 ```

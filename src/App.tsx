@@ -4,6 +4,9 @@ import { useContext, useEffect } from 'react'
 import useRouteElements from './useRouteElements'
 import { localStorageEventTarget } from './utils/auth'
 import { AppContext } from './contexts/app.context'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import ErrorBoundary from './components/ErrorBoundary'
+import { HelmetProvider } from 'react-helmet-async'
 
 function App() {
   const routeElements = useRouteElements()
@@ -16,10 +19,13 @@ function App() {
   }, [reset])
 
   return (
-    <>
-      {routeElements}
-      <ToastContainer />
-    </>
+    <HelmetProvider>
+      <ErrorBoundary>
+        {routeElements}
+        <ToastContainer />
+      </ErrorBoundary>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </HelmetProvider>
   )
 }
 

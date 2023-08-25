@@ -11,7 +11,7 @@ import {
 import config from 'src/constants/config'
 import { AuthResponse, RefreshTokenResponse } from 'src/types/auth.type'
 import { API_URL } from 'src/constants/api'
-import { isAxiosUnauthorizedError } from './utils'
+import { isAxiosExpiredTokenError, isAxiosUnauthorizedError } from './utils'
 import { ErrorResponse } from 'src/types/utils.type'
 
 //! Mô phỏng thứ tự gọi refresh token
@@ -22,7 +22,7 @@ import { ErrorResponse } from 'src/types/utils.type'
 //* Refresh Token mới cho Me: 5 - 6
 //? Gọi lại Me: 6
 
-class Http {
+export class Http {
   instance: AxiosInstance
   private accessToken: string
   private refreshToken: string
@@ -92,7 +92,7 @@ class Http {
           //* Trường hợp token hết hạn và request đó k phải là refresh token
           //* thì mới tiến hành gọi refresh token
 
-          if (isAxiosUnauthorizedError(error) && url !== API_URL.REFRESH_ACCESS_TOKEN) {
+          if (isAxiosExpiredTokenError(error) && url !== API_URL.REFRESH_ACCESS_TOKEN) {
             //* Hạn chế gọi 2 lần handleRefreshToken
             this.refreshTokenRequest = this.refreshTokenRequest
               ? this.refreshTokenRequest
