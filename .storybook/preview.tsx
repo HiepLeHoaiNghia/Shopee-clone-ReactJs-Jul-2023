@@ -5,7 +5,7 @@ import { AppProvider } from '../src/contexts/app.context'
 import { HelmetProvider } from 'react-helmet-async'
 import ErrorBoundary from '../src/components/ErrorBoundary'
 import { withThemeByDataAttribute } from '@storybook/addon-styling'
-
+import '../src/index.css'
 import React from 'react'
 const preview: Preview = {
   parameters: {
