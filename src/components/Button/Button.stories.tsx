@@ -42,7 +42,7 @@ export const Secondary: Story = {
   args: {
     children: 'Đăng Ký',
     className:
-      'flex w-full items-center justify-center bg-gray-500 px-2 py-4 text-center text-sm uppercase text-white hover:bg-gray-600',
+      'inline-flex items-center justify-center bg-gray-500 px-2 py-4 text-center text-sm uppercase text-white hover:bg-gray-600',
     isLoading: true,
     disabled: true
   }
