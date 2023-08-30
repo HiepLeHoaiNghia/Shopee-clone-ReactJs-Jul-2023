@@ -6,7 +6,8 @@ const meta = {
   component: CartHeader,
   parameters: {
     layout: 'fullscreen'
-  }
+  },
+  tags: ['autodocs']
 } satisfies Meta<typeof CartHeader>
 
 export default meta

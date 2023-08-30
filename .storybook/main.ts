@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/react-vite'
-const { mergeConfig } = require('vite')
-const { path } = require('path')
+import { mergeConfig } from 'vite'
+import path from 'path'
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -8,7 +8,8 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-onboarding',
-    '@storybook/addon-interactions'
+    '@storybook/addon-interactions',
+    'storybook-addon-react-router-v6'
   ],
   framework: {
     name: '@storybook/react-vite',
