@@ -36,7 +36,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
       <input
         className={classNameInput}
         //* khi k onChange truyền vào và giá trị nhập vào k phải số thì value sẽ là undefined và value lúc này sẽ lấy từ localValue, useState của localValue có giá trị khởi tạo là value = "" từ props nên giá trị mặc định value = "" sẽ đc cập nhật vào input
-        value={value || localValue}
+        value={value === undefined ? localValue : value}
         onChange={handleChange}
         {...rest}
         ref={ref}
