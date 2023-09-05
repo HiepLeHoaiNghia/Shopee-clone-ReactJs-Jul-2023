@@ -65,7 +65,8 @@ export default function Login() {
           <div className='lg:col-span-2 lg:col-start-4'>
             <form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit} noValidate>
               <div className='text-2xl'>Đăng nhập</div>
-              <Input
+              {/* //? Truyền generic type cho functional component Input */}
+              <Input<FormData>
                 name='email'
                 register={register}
                 type='email'
