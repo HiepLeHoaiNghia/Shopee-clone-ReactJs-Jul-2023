@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { InputHTMLAttributes, useState } from 'react'
-import type { RegisterOptions, UseFormRegister } from 'react-hook-form'
+import type { RegisterOptions, UseFormRegister, FieldValues, FieldPath } from 'react-hook-form'
 import { SVGEyeClose, SVGEyeOpen } from 'src/assets/svg'
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+interface Props<TFieldValues extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   classNameInput?: string
   classNameError?: string
   classNameEye?: string
-  register?: UseFormRegister<any>
+  register?: UseFormRegister<TFieldValues>
   rules?: RegisterOptions
+  name?: FieldPath<TFieldValues>
 }
 
-export default function Input({
+export default function Input<TFieldValues extends FieldValues = FieldValues>({
   errorMessage,
   className,
   classNameInput = 'w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm',
@@ -23,7 +24,7 @@ export default function Input({
   rules,
   type,
   ...rest
-}: Props) {
+}: Props<TFieldValues>) {
   const [openEye, setOpenEye] = useState(false)
   const registerResult = register && name ? register(name, rules) : null
 
