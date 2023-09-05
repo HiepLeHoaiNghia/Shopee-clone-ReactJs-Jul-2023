@@ -1,10 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, waitFor, type waitForOptions } from '@testing-library/react'
+import { render, screen, type waitForOptions } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom'
 import App from 'src/App'
 import { AppProvider, getInitialAppContext } from 'src/contexts/app.context'
-import { expect } from 'vitest'
 
 export const delay = (time: number) => new Promise((resolve) => setTimeout(() => resolve(true), time))
 

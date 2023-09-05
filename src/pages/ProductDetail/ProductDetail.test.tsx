@@ -1,4 +1,3 @@
-import { screen } from '@testing-library/react'
 import { delay, renderWithRouter } from 'src/utils/testUtils'
 import { describe, expect, test } from 'vitest'
 

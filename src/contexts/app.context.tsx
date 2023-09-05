@@ -35,7 +35,7 @@ export const AppProvider = ({
   defaultValue?: AppContextInterface
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(defaultValue.isAuthenticated)
-  const [profile, setProfile] = useState<User | null>(defaultValue.profile)
+  const [, setProfile] = useState<User | null>(defaultValue.profile)
   const [extendedPurchases, setExtendedPurchases] = useState<ExtendedPurchases[]>(defaultValue.extendedPurchases)
 
   const reset = () => {
